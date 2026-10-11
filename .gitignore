@@ -1,0 +1,2 @@
+# 二进制包通过 GitHub Release 附件发布，不进 git 历史
+*.apk
