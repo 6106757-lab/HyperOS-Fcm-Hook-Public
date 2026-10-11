@@ -31,7 +31,7 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 
 | 系统版本 | 状态 |
 | --- | --- |
-| **澎湃 OS 3.0**（HyperOS 3 / Android 16） | ✅ **实机验证通过**（REDMI K100 Pro，KernelSU + LSPosed） |
+| **澎湃 OS 3.0**（HyperOS 3 / Android 16） | ✅ **实机验证通过**（REDMI K100 Pro，REDMI K90 PM，小米17PM，KernelSU + LSPosed） |
 | 澎湃 OS 2.x / MIUI 14 及更早 | ⚠️ 未验证 |
 | 澎湃 OS 4.0 | ❓ 未验证，需另行考察（见下） |
 
