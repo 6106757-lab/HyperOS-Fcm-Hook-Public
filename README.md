@@ -27,11 +27,30 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 
 > 具体实现方式不在本仓库范围内。
 
+## 兼容性
+
+| 系统版本 | 状态 |
+| --- | --- |
+| **澎湃 OS 3.0**（HyperOS 3 / Android 16） | ✅ **实机验证通过**（REDMI K100 Pro，KernelSU + LSPosed） |
+| 澎湃 OS 2.x / MIUI 14 及更早 | ⚠️ 未验证 |
+| 澎湃 OS 4.0 | ❓ 未验证，需另行考察（见下） |
+
+**为什么只对澎湃 3.0 负责：** 模块的 hook 深度依赖小米私有框架的内部符号——
+`com.miui.server.greeze.*`（冻结/解冻）、`com.miui.powerkeeper.*`（电源策略、智能限制）、
+`com.miui.server.smartpower.*` 等，**共 17 个私有类**，加上小米改写的 `ActivityManagerServiceImpl`、
+`BroadcastQueueImpl` 等 servlet 层改造类。这些 ROM 内部结构在大版本升级时可能改名或被移除。
+
+**失效表现是温和的：** 每个 hook 点都单独 try/catch，符号找不到只会日志记一行并跳过，
+表现为「某个功能不生效」，**不会崩溃、不会卡开机、不会 bootloop**。但功能会退化。
+
+> 如果你在澎湃 4.0 或其他机型上试了，**不论成败都欢迎开 Issue 附上机型与系统版本**——
+> 这是判断能否适配的唯一依据。
+
 ## 环境要求
 
 | 项目 | 要求 |
 | --- | --- |
-| 系统 | HyperOS / MIUI，Android 16 实测通过 |
+| 系统 | 澎湃 OS（HyperOS）3.0 / Android 16 —— **仅此版本实机验证过** |
 | Root 方案 | KernelSU 或 Magisk |
 | 框架 | LSPosed |
 | 作用域 | 必须勾选 **`android`**（system_server）+ **`com.miui.powerkeeper`** |
@@ -40,7 +59,7 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 
 ## 安装
 
-1. 到 [Releases](../../releases) 下载 APK 并安装
+1. 从 [Releases](https://github.com/6106757-lab/HyperOS-Fcm-Hook-Public/releases/tag/v1.2.32) 下载 APK 并安装
 2. LSPosed 管理器里勾选本模块，**作用域勾上上面两项**
 3. 重启手机（`ctl.restart zygote` 软重启即可加载 hook）
 4. 打开模块界面确认各项已生效
@@ -50,7 +69,8 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 ## 已知限制
 
 - **hook 层改动必须软重启生效**，改动后的首次推送会走完整冷启动流程，耗时明显偏长属正常现象
-- 本模块针对特定 ROM 版本的方法签名编写，**换 ROM / 升级系统后可能失效**（失效时表现为 hook 不生效，不会导致崩溃）
+- 本模块针对**澎湃 3.0** 的方法签名编写，**升级系统 / 换机型后可能部分失效**
+  （失效表现为功能不生效，不会崩溃，详见[兼容性](#兼容性)）
 - 修改系统服务行为有风险，请确保你知道如何救砖（备份、 Recovery 可用）
 
 ## 许可证与二次分发
@@ -62,15 +82,24 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 - ❌ 禁止商业用途
 - 完整条款见 [LICENSE](LICENSE)
 
+## 下载
+
+[**v1.2.32 → HyperOS-fcm-hook-v1.2.32.apk**](https://github.com/6106757-lab/HyperOS-Fcm-Hook-Public/releases/download/v1.2.32/HyperOS-fcm-hook-v1.2.32.apk)（2.12 MB）
+
 ## 版本说明
 
-本仓库公开发布的最高版本为 **v1.2.32**。此后版本的迭代不在本仓库范围内。
+本仓库公开发布的最高版本为 **v1.2.32**。此后版本的调优细节不在本仓库范围内。
 
 | 版本 | 状态 |
 | --- | --- |
-| v1.2.32 | 公开发布（2026-10-07） |
+| v1.2.32 | 公开发布（安装包签名于 2026-10-07） |
 
-安装包的 SHA256 见 `SHA256SUMS.txt`，下载后建议校验。
+下载后建议核对校验值（见 `SHA256SUMS.txt`）：
+
+```bash
+sha256sum -c SHA256SUMS.txt
+# HyperOS-fcm-hook-v1.2.32.apk: OK
+```
 
 ---
 
