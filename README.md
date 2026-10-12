@@ -39,7 +39,7 @@ v1.2.32 提供以下开关 / 状态展示（均为模块界面上可见的项）
 **为什么只对澎湃 3.0 负责：** 模块的 hook 深度依赖小米私有框架的内部符号——
 `com.miui.server.greeze.*`（冻结/解冻）、`com.miui.powerkeeper.*`（电源策略、智能限制）、
 `com.miui.server.smartpower.*` 等，**共 17 个私有类**，加上小米改写的 `ActivityManagerServiceImpl`、
-`BroadcastQueueImpl` 等 servlet 层改造类。这些 ROM 内部结构在大版本升级时可能改名或被移除。
+`BroadcastQueueImpl` 等系统服务层改造类。这些 ROM 内部结构在大版本升级时可能改名或被移除。
 
 **失效表现是温和的：** 每个 hook 点都单独 try/catch，符号找不到只会日志记一行并跳过，
 表现为「某个功能不生效」，**不会崩溃、不会卡开机、不会 bootloop**。但功能会退化。
